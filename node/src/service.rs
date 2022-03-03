@@ -11,6 +11,7 @@ use sc_telemetry::{Telemetry, TelemetryWorker};
 use sp_consensus::SlotData;
 use sp_consensus_aura::sr25519::AuthorityPair as AuraPair;
 use std::{sync::Arc, time::Duration};
+use karaoke;
 
 // Our native executor instance.
 pub struct ExecutorDispatch;
@@ -126,8 +127,10 @@ pub fn new_partial(
 						*timestamp,
 						slot_duration,
 					);
+				let song_line = b"This is a song line.".to_vec();
+				let song_line = karaoke::InherentDataProvider::from_song_line(song_line);
 
-				Ok((timestamp, slot))
+				Ok((timestamp, slot, song_line))
 			},
 			spawner: &task_manager.spawn_essential_handle(),
 			can_author_with: sp_consensus::CanAuthorWithNativeVersion::new(
@@ -277,8 +280,10 @@ pub fn new_full(mut config: Configuration) -> Result<TaskManager, ServiceError> 
 							*timestamp,
 							raw_slot_duration,
 						);
+					let song_line = b"This is a song line.".to_vec();
+					let song_line = karaoke::InherentDataProvider::from_song_line(song_line);
 
-					Ok((timestamp, slot))
+					Ok((timestamp, slot, song_line))
 				},
 				force_authoring,
 				backoff_authoring_blocks,
