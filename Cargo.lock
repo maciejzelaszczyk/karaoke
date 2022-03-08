@@ -1375,6 +1375,11 @@ dependencies = [
 ]
 
 [[package]]
+name = "file"
+version = "1.1.2"
+source = "git+https://github.com/kornelski/rust-file.git#d7c41a09a9cfbbfa43e8d029cadbee951b04275a"
+
+[[package]]
 name = "file-per-thread-logger"
 version = "0.1.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2470,6 +2475,7 @@ name = "karaoke"
 version = "4.0.0-dev"
 dependencies = [
  "async-trait",
+ "file",
  "frame-support",
  "parity-scale-codec",
  "scale-info",

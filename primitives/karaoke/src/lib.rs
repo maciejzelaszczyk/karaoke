@@ -8,7 +8,6 @@ use sp_inherents::{InherentData, InherentIdentifier, IsFatalError};
 use sp_runtime::RuntimeString;
 use sp_std::convert::From;
 
-
 pub const INHERENT_IDENTIFIER: InherentIdentifier = *b"karaoke0";
 
 pub type InherentType = Vec<u8>;

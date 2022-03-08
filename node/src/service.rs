@@ -12,6 +12,7 @@ use sp_consensus::SlotData;
 use sp_consensus_aura::sr25519::AuthorityPair as AuraPair;
 use std::{sync::Arc, time::Duration};
 use karaoke;
+use std::time::SystemTime;
 
 // Our native executor instance.
 pub struct ExecutorDispatch;
@@ -127,7 +128,8 @@ pub fn new_partial(
 						*timestamp,
 						slot_duration,
 					);
-				let song_line = b"This is a song line.".to_vec();
+				let song_line = format!("{:?} | This is a song line.", SystemTime::now());
+				let song_line = song_line.as_bytes().to_vec();
 				let song_line = karaoke::InherentDataProvider::from_song_line(song_line);
 
 				Ok((timestamp, slot, song_line))
@@ -280,7 +282,8 @@ pub fn new_full(mut config: Configuration) -> Result<TaskManager, ServiceError> 
 							*timestamp,
 							raw_slot_duration,
 						);
-					let song_line = b"This is a song line.".to_vec();
+					let song_line = format!("{:?} | This is a song line.", SystemTime::now());
+					let song_line = song_line.as_bytes().to_vec();
 					let song_line = karaoke::InherentDataProvider::from_song_line(song_line);
 
 					Ok((timestamp, slot, song_line))

@@ -30,7 +30,7 @@ pub mod pallet {
 	#[pallet::event]
 	#[pallet::generate_deposit(pub(super) fn deposit_event)]
 	pub enum Event<T: Config> {
-		SongLineSet { song_line: T::Line, who: T::AccountId }
+		SongLineSet { song_line: T::Line }
 	}
 
 	#[pallet::error]
@@ -42,15 +42,9 @@ pub mod pallet {
 	impl<T: Config> Pallet<T> {
 		#[pallet::weight(1_000)]
 		pub fn set(origin: OriginFor<T>, song_line: T::Line) -> DispatchResult {
-			let sender = ensure_signed(origin)?;
 
-			match SongLine::<T>::get() {
-				None => {
-					<SongLine<T>>::put(song_line.clone());
-					Self::deposit_event(Event::SongLineSet { song_line: song_line, who: sender })
-				},
-				Some(_) => Err(Error::<T>::LineAlreadyUpdated)?
-			}
+			<SongLine<T>>::put(song_line.clone());
+			Self::deposit_event(Event::SongLineSet { song_line: song_line });
 
 			Ok(())
 		}	
